@@ -8,6 +8,7 @@ import {
   TextInput,
   Button,
 } from 'react-native';
+import styles from './styles';
 
 export default function Inventory({ setPage }) {
   const [editMode, setEditMode] = useState(false);
@@ -25,58 +26,21 @@ export default function Inventory({ setPage }) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style='auto' />
-      <View
-        style={{
-          marginBottom: 20,
-          marginTop: 10,
-          marginLeft: 10,
-          alignSelf: 'flex-start',
-        }}
-      >
+      <View style={styles.homeBtnContainer}>
         <Button title='< Home' onPress={() => setPage('home')} />
       </View>
 
       <View style={{ marginBottom: 20 }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            width: '100%',
-            justifyContent: 'space-evenly',
-          }}
-        >
+        <View style={styles.tableHeader}>
           <Text style={{ minWidth: 100 }}>Flavor</Text>
           <Text>Stock</Text>
           <Text>Suggested</Text>
           <Text></Text>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            padding: 10,
-            width: '100%',
-            justifyContent: 'space-evenly',
-            fontSize: 40,
-          }}
-        >
+        <View style={styles.tableData}>
           <Text style={{ padding: 5 }}>IceCreamName</Text>
-          <Text
-            style={{
-              textAlign: 'center',
-              marginRight: 5,
-              fontSize: 20,
-            }}
-          >
-            {stock}
-          </Text>
-          <Text
-            style={{
-              textAlign: 'center',
-              marginRight: 5,
-              fontSize: 20,
-            }}
-          >
-            {suggested}
-          </Text>
+          <Text style={styles.tableCell}>{stock}</Text>
+          <Text style={styles.tableCell}>{suggested}</Text>
           <Button
             title={editMode ? `Cancel` : 'Edit'}
             style={{ marginLeft: 10 }}
@@ -84,37 +48,22 @@ export default function Inventory({ setPage }) {
           />
         </View>
         <View
-          style={{
-            flexDirection: 'row',
-            padding: 10,
-            backgroundColor: 'grey',
-            width: '100%',
-            justifyContent: 'space-evenly',
-            fontSize: 40,
-            display: editMode ? 'flex' : `none`,
-          }}
+          style={
+            (styles.tableHeader,
+            {
+              display: editMode ? 'flex' : `none`,
+            })
+          }
         >
           <Text style={{ padding: 5, minWidth: 100 }}></Text>
           <TextInput
             value={String(editStock)}
-            style={{
-              borderColor: 'black',
-              borderWidth: 1,
-              textAlign: 'center',
-              marginRight: 5,
-              padding: 5,
-            }}
+            style={styles.tableInput}
             onChangeText={(text) => setEditStock(text)}
           />
           <TextInput
             value={String(editSuggestedValue)}
-            style={{
-              borderColor: 'black',
-              borderWidth: 1,
-              textAlign: 'center',
-              marginRight: 5,
-              padding: 5,
-            }}
+            style={styles.tableInput}
             onChangeText={(text) => setEditSuggested(text)}
           />
           <Button
@@ -128,11 +77,3 @@ export default function Inventory({ setPage }) {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-  },
-});
