@@ -43,14 +43,14 @@ export default class InventoryTable extends Component {
     this.setState({ ...this.state, selectedFlavor: '' });
   }
 
-  _alertIndex(data) {
+  _setSelectedFlavor(data) {
     this.setState({ ...this.state, selectedFlavor: data });
   }
 
   render() {
     const state = this.state;
     const element = (data, index) => (
-      <TouchableOpacity onPress={() => this._alertIndex(data)}>
+      <TouchableOpacity onPress={() => this._setSelectedFlavor(data)}>
         <View style={styles.btn}>
           <Text style={styles.btnText}>Edit</Text>
         </View>
