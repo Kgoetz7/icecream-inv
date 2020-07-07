@@ -73,7 +73,7 @@ export default function Inventory({ setPage }) {
           />
         </View>
       </View>
-      <Button title='Adddddddddddd' />
+      <Button title='Add' />
     </SafeAreaView>
   );
 }
