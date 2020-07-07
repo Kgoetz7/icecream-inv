@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, Button } from 'react-native';
 import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
 import EditModal from './EditModal';
+import BarcodeScanner from './BarcodeScanner';
 
 export default class InventoryTable extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ export default class InventoryTable extends Component {
         },
       },
       selectedFlavor: '',
+      addInProgress: false,
     };
     this._clearFlavor = this._clearFlavor.bind(this);
     this.updateData = this.updateData.bind(this);
@@ -94,6 +96,18 @@ export default class InventoryTable extends Component {
             </TableWrapper>
           ))}
         </Table>
+        <Button
+          title='Add'
+          onPress={() => {
+            console.log(state);
+            this.setState({ ...state, addInProgress: true });
+          }}
+        />
+        {state.addInProgress ? (
+          <BarcodeScanner
+            closeFn={() => this.setState({ ...state, addInProgress: false })}
+          />
+        ) : null}
       </View>
     );
   }

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
-export default function BarcodeScanner({ setPage }) {
+export default function BarcodeScanner({ closeFn }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
@@ -40,7 +40,7 @@ export default function BarcodeScanner({ setPage }) {
       {scanned && (
         <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />
       )}
-      <Button title='Close' color='red' onPress={() => setPage('home')} />
+      <Button title='Close' color='red' onPress={() => closeFn()} />
     </View>
   );
 }

@@ -26,7 +26,7 @@ export default function App() {
     return (
       <>
         <StatusBar />
-        <BarcodeScanner setPage={setPage} />
+        <BarcodeScanner closeFn={() => setPage('home')} />
       </>
     );
   } else {
