@@ -10,30 +10,32 @@ export default class InventoryTable extends Component {
     this.state = {
       tableHead: ['Flavor', 'Stock', 'Suggested', ''],
       tableData: {
-        Chocolate: {
+        1: {
           flavor: 'Chocolate',
           stock: '11',
           suggested: '31',
           btn: true,
         },
-        Vanilla: { flavor: 'Vanilla', stock: '5', suggested: '11', btn: true },
-        Strawberry: {
+        2: { flavor: 'Vanilla', stock: '5', suggested: '11', btn: true },
+        3: {
           flavor: 'Strawberry',
           stock: '8',
           suggested: '15',
           btn: true,
         },
       },
-      selectedFlavor: '',
+      selectedFlavor: null,
       addInProgress: false,
+      scanned: false,
+      selectedId: null,
     };
-    this._clearFlavor = this._clearFlavor.bind(this);
+    this.resetState = this.resetState.bind(this);
     this.updateData = this.updateData.bind(this);
   }
 
-  updateData(flavor, stock, suggested) {
+  updateData(id, flavor, stock, suggested) {
     let tableDataCopy = this.state.tableData;
-    tableDataCopy[flavor] = { flavor, stock, suggested, btn: true };
+    tableDataCopy[id] = { flavor, stock, suggested, btn: true };
 
     this.setState({
       ...this.state,
@@ -41,8 +43,14 @@ export default class InventoryTable extends Component {
     });
   }
 
-  _clearFlavor() {
-    this.setState({ ...this.state, selectedFlavor: '' });
+  resetState() {
+    this.setState({
+      ...this.state,
+      selectedFlavor: null,
+      selectedId: null,
+      addInProgress: false,
+      scanned: false,
+    });
   }
 
   _setSelectedFlavor(data) {
@@ -59,10 +67,29 @@ export default class InventoryTable extends Component {
       </TouchableOpacity>
     );
 
+    if (state.addInProgress && state.scanned) {
+      return (
+        <EditModal
+          flavor={''}
+          resetState={this.resetState}
+          stock={''}
+          suggested={''}
+          updateData={this.updateData}
+          id={state.selectedId}
+        />
+      );
+    }
     if (state.addInProgress) {
       return (
         <BarcodeScanner
           closeFn={() => this.setState({ ...state, addInProgress: false })}
+          onScan={(barcode) => {
+            this.setState({
+              ...this.state,
+              scanned: true,
+              selectedId: barcode,
+            });
+          }}
         />
       );
     }
@@ -92,10 +119,11 @@ export default class InventoryTable extends Component {
                     {state.selectedFlavor === state.tableData[key]['flavor'] ? (
                       <EditModal
                         flavor={state.tableData[key]['flavor']}
-                        clearFlavor={this._clearFlavor}
+                        resetState={this.resetState}
                         stock={state.tableData[key]['stock']}
                         suggested={state.tableData[key]['suggested']}
                         updateData={this.updateData}
+                        id={key}
                       />
                     ) : null}
                   </Fragment>

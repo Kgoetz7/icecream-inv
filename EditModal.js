@@ -9,10 +9,17 @@ import {
   TextInput,
 } from 'react-native';
 
-const EditModal = ({ flavor, stock, suggested, clearFlavor, updateData }) => {
-  const [modalVisible, setModalVisible] = useState(false);
+const EditModal = ({
+  id,
+  flavor,
+  stock,
+  suggested,
+  resetState,
+  updateData,
+}) => {
   const [editSuggestedValue, setEditSuggested] = useState(suggested);
   const [editStock, setEditStock] = useState(stock);
+  const [editFlavor, setEditFlavor] = useState(flavor || '');
 
   return (
     <View style={styles.centeredView}>
@@ -26,26 +33,39 @@ const EditModal = ({ flavor, stock, suggested, clearFlavor, updateData }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>{flavor}</Text>
+            <Text>{id}</Text>
+            <Text>Flavor</Text>
+            <TextInput
+              value={editFlavor}
+              style={styles.tableInput}
+              placeholder='Flavor'
+              onChangeText={(text) => setEditFlavor(text)}
+            />
             <View style={{ flexDirection: 'row' }}>
-              <TextInput
-                value={String(editStock)}
-                keyboardType={'numeric'}
-                onChangeText={(text) => setEditStock(text)}
-                style={styles.tableInput}
-              />
-              <TextInput
-                value={String(editSuggestedValue)}
-                keyboardType={'numeric'}
-                onChangeText={(text) => setEditSuggested(text)}
-                style={styles.tableInput}
-              />
+              <View style={{ marginRight: 20 }}>
+                <Text>Stock</Text>
+                <TextInput
+                  value={String(editStock)}
+                  keyboardType={'numeric'}
+                  onChangeText={(text) => setEditStock(text)}
+                  style={styles.tableInput}
+                />
+              </View>
+              <View>
+                <Text>Suggested</Text>
+                <TextInput
+                  value={String(editSuggestedValue)}
+                  keyboardType={'numeric'}
+                  onChangeText={(text) => setEditSuggested(text)}
+                  style={styles.tableInput}
+                />
+              </View>
             </View>
             <View style={{ flexDirection: 'row' }}>
               <TouchableHighlight
                 style={{ ...styles.openButton, backgroundColor: 'red' }}
                 onPress={() => {
-                  clearFlavor();
+                  resetState();
                 }}
               >
                 <Text style={styles.textStyle}>Cancel</Text>
@@ -53,8 +73,8 @@ const EditModal = ({ flavor, stock, suggested, clearFlavor, updateData }) => {
               <TouchableHighlight
                 style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
                 onPress={() => {
-                  updateData(flavor, editStock, editSuggestedValue);
-                  clearFlavor();
+                  updateData(id, editFlavor, editStock, editSuggestedValue);
+                  resetState();
                 }}
               >
                 <Text style={styles.textStyle}>Update</Text>
