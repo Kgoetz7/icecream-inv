@@ -5,24 +5,12 @@ import {
   View,
   SafeAreaView,
   StatusBar,
-  TextInput,
   Button,
 } from 'react-native';
 import Inventory from './Inventory';
 
 export default function App() {
   const [page, setPage] = useState('home');
-  const [editMode, setEditMode] = useState(false);
-  const [stock, setStock] = useState(5);
-  const [suggested, setSuggested] = useState(10);
-  const [editSuggestedValue, setEditSuggested] = useState(10);
-  const [editStock, setEditStock] = useState(5);
-
-  const updateValues = () => {
-    setStock(editStock);
-    setSuggested(editSuggestedValue);
-    setEditMode(false);
-  };
 
   if (page === 'inventory') {
     return <Inventory setPage={setPage} />;
