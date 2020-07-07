@@ -15,10 +15,10 @@ export default function App() {
 
   if (page === 'inventory') {
     return (
-      <>
+      <SafeAreaView>
         <Button title='Home' onPress={() => setPage('home')} />
         <InventoryTable />
-      </>
+      </SafeAreaView>
     );
   } else if (page === 'scan') {
     return <BarcodeScanner setPage={setPage} />;
