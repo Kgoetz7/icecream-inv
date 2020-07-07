@@ -8,8 +8,10 @@ import {
   TextInput,
   Button,
 } from 'react-native';
+import Inventory from './Inventory';
 
 export default function App() {
+  const [page, setPage] = useState('home');
   const [editMode, setEditMode] = useState(false);
   const [stock, setStock] = useState(5);
   const [suggested, setSuggested] = useState(10);
@@ -19,98 +21,30 @@ export default function App() {
   const updateValues = () => {
     setStock(editStock);
     setSuggested(editSuggestedValue);
+    setEditMode(false);
   };
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar style='auto' />
-      <View
-        style={{
-          flexDirection: 'row',
-          width: '100%',
-          justifyContent: 'space-evenly',
-        }}
-      >
-        <Text style={{ minWidth: 100 }}>Flavor</Text>
-        <Text>Stock</Text>
-        <Text>Suggested</Text>
-        <Text></Text>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          padding: 10,
-          backgroundColor: 'red',
-          width: '100%',
-          justifyContent: 'space-evenly',
-          fontSize: 40,
-        }}
-      >
-        <Text style={{ padding: 5 }}>IceCreamName</Text>
-        <Text
+  if (page === 'inventory') {
+    return <Inventory setPage={setPage} />;
+  } else {
+    return (
+      <View style={styles.container}>
+        <StatusBar />
+        <View
           style={{
-            textAlign: 'center',
-            marginRight: 5,
-            fontSize: 20,
+            marginVertical: 20,
+            width: '80%',
           }}
         >
-          {stock}
-        </Text>
-        <Text
-          style={{
-            textAlign: 'center',
-            marginRight: 5,
-            fontSize: 20,
-          }}
-        >
-          {suggested}
-        </Text>
-        <Button
-          title='edit'
-          style={{ marginLeft: 10 }}
-          onPress={() => setEditMode(!editMode)}
-        />
+          <Button title='Scan In' />
+          <Text>{'           '}</Text>
+          <Button title='Scan Out' />
+          <Text>{'           '}</Text>
+          <Button title='Inventory' onPress={() => setPage('inventory')} />
+        </View>
       </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          padding: 10,
-          backgroundColor: 'red',
-          width: '100%',
-          justifyContent: 'space-evenly',
-          fontSize: 40,
-          display: editMode ? 'flex' : `none`,
-        }}
-      >
-        <Text style={{ padding: 5, minWidth: 100 }}></Text>
-        <TextInput
-          value={String(editStock)}
-          style={{
-            borderColor: 'black',
-            borderWidth: 1,
-            textAlign: 'center',
-            marginRight: 5,
-          }}
-          onChangeText={(text) => setEditStock(text)}
-        />
-        <TextInput
-          value={String(editSuggestedValue)}
-          style={{
-            borderColor: 'black',
-            borderWidth: 1,
-            textAlign: 'center',
-            marginRight: 5,
-          }}
-          onChangeText={(text) => setEditSuggested(text)}
-        />
-        <Button
-          title='update'
-          style={{ marginLeft: 10 }}
-          onPress={() => updateValues()}
-        />
-      </View>
-    </SafeAreaView>
-  );
+    );
+  }
 }
 
 const styles = StyleSheet.create({
