@@ -28,7 +28,7 @@ export default function App() {
     return <Inventory setPage={setPage} />;
   } else {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <StatusBar />
         <View
           style={{
@@ -42,7 +42,7 @@ export default function App() {
           <Text>{'           '}</Text>
           <Button title='Inventory' onPress={() => setPage('inventory')} />
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 }
