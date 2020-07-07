@@ -33,7 +33,7 @@ const EditModal = ({
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text>{Flavor}</Text>
+            <Text>Flavor</Text>
             <TextInput
               value={id}
               style={styles.tableInput}
@@ -72,7 +72,7 @@ const EditModal = ({
               <TouchableHighlight
                 style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
                 onPress={() => {
-                  updateData(id, editFlavor, editStock, editSuggestedValue);
+                  updateData(id, editStock, editSuggestedValue);
                   resetState();
                 }}
               >

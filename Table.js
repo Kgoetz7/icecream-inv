@@ -33,7 +33,7 @@ export default class InventoryTable extends Component {
     this.updateData = this.updateData.bind(this);
   }
 
-  updateData(id, flavor, stock, suggested) {
+  updateData(flavor, stock, suggested) {
     let tableDataCopy = this.state.tableData;
     tableDataCopy[id] = { flavor, stock, suggested, btn: true };
 
