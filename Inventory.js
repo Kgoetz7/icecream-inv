@@ -18,10 +18,14 @@ export default function Inventory({ setPage }) {
   const [editStock, setEditStock] = useState(5);
 
   const updateValues = () => {
-    setStock(editStock);
+    setStock(Number(editStock));
     setSuggested(editSuggestedValue);
     setEditMode(false);
   };
+  const gijoe = 68
+  function test(){
+    console.log(gijoe)
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -58,11 +62,13 @@ export default function Inventory({ setPage }) {
           <Text style={{ padding: 5, minWidth: 100 }}></Text>
           <TextInput
             value={String(editStock)}
+            keyboardType={'numeric'}
             style={styles.tableInput}
             onChangeText={(text) => setEditStock(text)}
           />
           <TextInput
             value={String(editSuggestedValue)}
+            keyboardType={'numeric'}
             style={styles.tableInput}
             onChangeText={(text) => setEditSuggested(text)}
           />
@@ -73,7 +79,7 @@ export default function Inventory({ setPage }) {
           />
         </View>
       </View>
-      <Button title='Add' />
+      <Button title='Add' onPress={()=>test()}/>
     </SafeAreaView>
   );
 }
