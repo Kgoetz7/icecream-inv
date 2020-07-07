@@ -33,10 +33,9 @@ const EditModal = ({
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text>{id}</Text>
-            <Text>Flavor</Text>
+            <Text>{Flavor}</Text>
             <TextInput
-              value={editFlavor}
+              value={id}
               style={styles.tableInput}
               placeholder='Flavor'
               onChangeText={(text) => setEditFlavor(text)}
