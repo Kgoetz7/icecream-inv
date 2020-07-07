@@ -8,6 +8,7 @@ import {
   Button,
 } from 'react-native';
 import InventoryTable from './Table';
+import BarcodeScanner from './BarcodeScanner';
 
 export default function App() {
   const [page, setPage] = useState('home');
@@ -19,6 +20,8 @@ export default function App() {
         <InventoryTable />
       </>
     );
+  } else if (page === 'scan') {
+    return <BarcodeScanner setPage={setPage} />;
   } else {
     return (
       <SafeAreaView style={styles.container}>
@@ -29,9 +32,9 @@ export default function App() {
             width: '80%',
           }}
         >
-          <Button title='Scan In' />
+          <Button title='Scan In' onPress={() => setPage('scan')} />
           <Text>{'           '}</Text>
-          <Button title='Scan Out' />
+          <Button title='Scan Out' onPress={() => setPage('scan')} />
           <Text>{'           '}</Text>
           <Button title='Inventory' onPress={() => setPage('inventory')} />
         </View>
