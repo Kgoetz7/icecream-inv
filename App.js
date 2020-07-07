@@ -7,13 +7,18 @@ import {
   StatusBar,
   Button,
 } from 'react-native';
-import Inventory from './Inventory';
+import InventoryTable from './Table';
 
 export default function App() {
   const [page, setPage] = useState('home');
 
   if (page === 'inventory') {
-    return <Inventory setPage={setPage} />;
+    return (
+      <>
+        <Button title='Home' onPress={() => setPage('home')} />
+        <InventoryTable />
+      </>
+    );
   } else {
     return (
       <SafeAreaView style={styles.container}>
