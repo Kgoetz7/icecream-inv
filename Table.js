@@ -59,6 +59,14 @@ export default class InventoryTable extends Component {
       </TouchableOpacity>
     );
 
+    if (state.addInProgress) {
+      return (
+        <BarcodeScanner
+          closeFn={() => this.setState({ ...state, addInProgress: false })}
+        />
+      );
+    }
+
     return (
       <View style={styles.container}>
         <Table borderStyle={{ borderColor: 'transparent' }}>
@@ -98,16 +106,8 @@ export default class InventoryTable extends Component {
         </Table>
         <Button
           title='Add'
-          onPress={() => {
-            console.log(state);
-            this.setState({ ...state, addInProgress: true });
-          }}
+          onPress={() => this.setState({ ...state, addInProgress: true })}
         />
-        {state.addInProgress ? (
-          <BarcodeScanner
-            closeFn={() => this.setState({ ...state, addInProgress: false })}
-          />
-        ) : null}
       </View>
     );
   }
