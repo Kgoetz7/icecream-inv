@@ -17,8 +17,6 @@ export default function BarcodeScanner({ closeFn, onScan }) {
     setScanned(true);
     if (onScan) {
       onScan(data);
-    } else {
-      alert(`Bar code with type ${type} and data ${data} has been scanned!`);
     }
   };
 

@@ -9,62 +9,17 @@ export default class InventoryTable extends Component {
     super(props);
     this.state = {
       tableHead: ['Flavor', 'Stock', 'Suggested', ''],
-      tableData: {
-        '1': {
-          flavor: 'Chocolate',
-          stock: '11',
-          suggested: '31',
-          btn: true,
-        },
-        '2': { flavor: 'Vanilla', stock: '5', suggested: '11', btn: true },
-        '3': {
-          flavor: 'Strawberry',
-          stock: '8',
-          suggested: '15',
-          btn: true,
-        },
-      },
       selectedFlavor: null,
       addInProgress: false,
       scanned: false,
-      selectedId: null,
     };
     this.resetState = this.resetState.bind(this);
-    this.updateData = this.updateData.bind(this);
-  }
-
-  async updateData(flavor, stock, suggested) {
-    try {
-      const data = await fetch('http://localhost:5000/items', {
-        method: 'put',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          flavor: 'Vanilla',
-          stock: 1,
-          suggested: 2,
-        }),
-      });
-
-      console.log(data);
-      const items = await data.json();
-    } catch (err) {
-      console.log(err);
-    }
-
-    let tableDataCopy = this.state.tableData;
-    tableDataCopy[flavor] = { flavor, stock, suggested, btn: true };
-
-    this.setState({
-      ...this.state,
-      tableData: tableDataCopy,
-    });
   }
 
   resetState() {
     this.setState({
       ...this.state,
       selectedFlavor: null,
-      selectedId: null,
       addInProgress: false,
       scanned: false,
     });
@@ -90,8 +45,8 @@ export default class InventoryTable extends Component {
           resetState={this.resetState}
           stock={''}
           suggested={''}
-          updateData={this.updateData}
-          id={state.selectedId}
+          updateData={this.props.addData}
+          id={state.selectedFlavor}
         />
       );
     }
@@ -99,11 +54,11 @@ export default class InventoryTable extends Component {
       return (
         <BarcodeScanner
           closeFn={() => this.setState({ ...state, addInProgress: false })}
-          onScan={(barcode) => {
+          onScan={(barcodeData) => {
             this.setState({
               ...this.state,
               scanned: true,
-              selectedId: barcode,
+              selectedFlavor: barcodeData,
             });
           }}
         />
@@ -118,28 +73,28 @@ export default class InventoryTable extends Component {
             style={styles.head}
             textStyle={styles.text}
           />
-          {Object.keys(state.tableData).map((key, index) => (
+          {this.props.data.map((object, index) => (
             <TableWrapper style={styles.row} key={index}>
-              {Object.keys(state.tableData[key]).map((innerKey, index) => {
+              {Object.keys(object).map((key, index) => {
                 return (
                   <Fragment key={index}>
                     <Cell
                       key={index}
                       data={
-                        innerKey === 'btn'
-                          ? element(state.tableData[key]['flavor'], index)
-                          : state.tableData[key][innerKey]
+                        key === 'btn'
+                          ? element(object['flavor'], index)
+                          : object[key]
                       }
                       textStyle={styles.text}
                     />
-                    {state.selectedFlavor === state.tableData[key]['flavor'] ? (
+                    {state.selectedFlavor === object['flavor'] ? (
                       <EditModal
-                        flavor={state.tableData[key]['flavor']}
+                        flavor={object['flavor']}
                         resetState={this.resetState}
-                        stock={state.tableData[key]['stock']}
-                        suggested={state.tableData[key]['suggested']}
-                        updateData={this.updateData}
-                        id={key}
+                        stock={object['stock']}
+                        suggested={object['suggested']}
+                        updateData={this.props.updateData}
+                        id={object['flavor']}
                       />
                     ) : null}
                   </Fragment>

@@ -9,17 +9,9 @@ import {
   TextInput,
 } from 'react-native';
 
-const EditModal = ({
-  id,
-  flavor,
-  stock,
-  suggested,
-  resetState,
-  updateData,
-}) => {
+const EditModal = ({ id, stock, suggested, resetState, updateData }) => {
   const [editSuggestedValue, setEditSuggested] = useState(suggested);
   const [editStock, setEditStock] = useState(stock);
-  const [editFlavor, setEditFlavor] = useState(flavor || '');
 
   return (
     <View style={styles.centeredView}>
