@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "icecream-inventory",
+    "name": "Icecream Inventory",
     "slug": "icecream-inventory",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,14 +13,16 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
-    },
+    "assetBundlePatterns": ["**/*"],
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.zksmith.icecreaminventory"
+    },
+    "android": {
+      "package": "com.zksmith.icecreaminventory"
     }
   }
 }
