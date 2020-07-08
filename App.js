@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   StatusBar,
   Button,
+  TouchableHighlight,
 } from 'react-native';
 import InventoryTable from './InventoryTable';
 import BarcodeScanner from './BarcodeScanner';
@@ -83,7 +84,7 @@ export default function App() {
       alert(
         `${scanType === 'increment' ? 'Added' : 'Removed'} 1 ${flavor} ${
           scanType === 'increment' ? 'to' : 'from'
-        } stock. ${response.updatedItem[0].stock} left.`
+        } stock. ${response.updatedItem.stock} left.`
       );
     } catch (err) {
       console.log(err);
@@ -121,27 +122,36 @@ export default function App() {
         <StatusBar />
         <View
           style={{
-            marginVertical: 20,
+            marginTop: '20%',
             width: '80%',
           }}
         >
-          <Button
-            title='Scan In'
+          <TouchableHighlight
+            style={styles.homeBtn}
             onPress={() => {
               setPage('scan');
               setScanType('increment');
             }}
-          />
+          >
+            <Text style={styles.btnText}>Scan In</Text>
+          </TouchableHighlight>
           <Text>{'           '}</Text>
-          <Button
-            title='Scan Out'
+          <TouchableHighlight
+            style={styles.homeBtn}
             onPress={() => {
               setPage('scan');
               setScanType('decrement');
             }}
-          />
+          >
+            <Text style={styles.btnText}>Scan Out</Text>
+          </TouchableHighlight>
           <Text>{'           '}</Text>
-          <Button title='Inventory' onPress={() => setPage('inventory')} />
+          <TouchableHighlight
+            style={styles.homeBtn}
+            onPress={() => setPage('inventory')}
+          >
+            <Text style={styles.btnText}>View Inventory</Text>
+          </TouchableHighlight>
         </View>
       </SafeAreaView>
     );
@@ -153,5 +163,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
+  },
+  homeBtn: {
+    backgroundColor: '#1976d2',
+    paddingVertical: 30,
+  },
+  btnText: {
+    color: '#fff',
+    textAlign: 'center',
+    textTransform: 'uppercase',
   },
 });

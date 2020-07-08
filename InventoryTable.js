@@ -1,5 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Button } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Button,
+  ScrollView,
+} from 'react-native';
 import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
 import EditModal from './EditModal';
 import BarcodeScanner from './BarcodeScanner';
@@ -67,46 +74,48 @@ export default class InventoryTable extends Component {
 
     return (
       <View style={styles.container}>
-        <Table borderStyle={{ borderColor: 'transparent' }}>
-          <Row
-            data={state.tableHead}
-            style={styles.head}
-            textStyle={styles.text}
-          />
-          {this.props.data.map((object, index) => (
-            <TableWrapper style={styles.row} key={index}>
-              {Object.keys(object).map((key, index) => {
-                return (
-                  <Fragment key={index}>
-                    <Cell
-                      key={index}
-                      data={
-                        key === 'btn'
-                          ? element(object['flavor'], index)
-                          : object[key]
-                      }
-                      textStyle={styles.text}
-                    />
-                    {state.selectedFlavor === object['flavor'] ? (
-                      <EditModal
-                        flavor={object['flavor']}
-                        resetState={this.resetState}
-                        stock={object['stock']}
-                        suggested={object['suggested']}
-                        updateData={this.props.updateData}
-                        id={object['flavor']}
+        <ScrollView horizontal={false}>
+          <Table borderStyle={{ borderColor: 'transparent' }}>
+            <Row
+              data={state.tableHead}
+              style={styles.head}
+              textStyle={styles.text}
+            />
+            {this.props.data.map((object, index) => (
+              <TableWrapper style={styles.row} key={index}>
+                {Object.keys(object).map((key, index) => {
+                  return (
+                    <Fragment key={index}>
+                      <Cell
+                        key={index}
+                        data={
+                          key === 'btn'
+                            ? element(object['flavor'], index)
+                            : object[key]
+                        }
+                        textStyle={styles.text}
                       />
-                    ) : null}
-                  </Fragment>
-                );
-              })}
-            </TableWrapper>
-          ))}
-        </Table>
-        <Button
-          title='Add'
-          onPress={() => this.setState({ ...state, addInProgress: true })}
-        />
+                      {state.selectedFlavor === object['flavor'] ? (
+                        <EditModal
+                          flavor={object['flavor']}
+                          resetState={this.resetState}
+                          stock={object['stock']}
+                          suggested={object['suggested']}
+                          updateData={this.props.updateData}
+                          id={object['flavor']}
+                        />
+                      ) : null}
+                    </Fragment>
+                  );
+                })}
+              </TableWrapper>
+            ))}
+          </Table>
+          <Button
+            title='Add'
+            onPress={() => this.setState({ ...state, addInProgress: true })}
+          />
+        </ScrollView>
       </View>
     );
   }
@@ -116,7 +125,11 @@ const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
   head: { height: 40, backgroundColor: '#808B97' },
   text: { margin: 6 },
-  row: { flexDirection: 'row', backgroundColor: '#FFF1C1' },
-  btn: { width: 58, height: 18, backgroundColor: '#78B7BB', borderRadius: 2 },
+  row: {
+    flexDirection: 'row',
+    backgroundColor: '#FFF1C1',
+    paddingVertical: 5,
+  },
+  btn: { width: 48, height: 20, backgroundColor: '#78B7BB', borderRadius: 2 },
   btnText: { textAlign: 'center', color: '#fff' },
 });
