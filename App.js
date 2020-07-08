@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -12,6 +12,20 @@ import BarcodeScanner from './BarcodeScanner';
 
 export default function App() {
   const [page, setPage] = useState('home');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetch('http://localhost:5000/items');
+
+        const items = await data.json();
+        console.log(items);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, []);
 
   if (page === 'inventory') {
     return (

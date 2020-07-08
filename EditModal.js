@@ -38,7 +38,6 @@ const EditModal = ({
               value={id}
               style={styles.tableInput}
               placeholder='Flavor'
-              onChangeText={(text) => setEditFlavor(text)}
             />
             <View style={{ flexDirection: 'row' }}>
               <View style={{ marginRight: 20 }}>

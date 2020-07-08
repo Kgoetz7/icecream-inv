@@ -10,14 +10,14 @@ export default class InventoryTable extends Component {
     this.state = {
       tableHead: ['Flavor', 'Stock', 'Suggested', ''],
       tableData: {
-        1: {
+        '1': {
           flavor: 'Chocolate',
           stock: '11',
           suggested: '31',
           btn: true,
         },
-        2: { flavor: 'Vanilla', stock: '5', suggested: '11', btn: true },
-        3: {
+        '2': { flavor: 'Vanilla', stock: '5', suggested: '11', btn: true },
+        '3': {
           flavor: 'Strawberry',
           stock: '8',
           suggested: '15',
@@ -33,9 +33,26 @@ export default class InventoryTable extends Component {
     this.updateData = this.updateData.bind(this);
   }
 
-  updateData(id, stock, suggested) {
+  async updateData(flavor, stock, suggested) {
+    try {
+      const data = await fetch('http://localhost:5000/items', {
+        method: 'put',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          flavor: 'Vanilla',
+          stock: 1,
+          suggested: 2,
+        }),
+      });
+
+      console.log(data);
+      const items = await data.json();
+    } catch (err) {
+      console.log(err);
+    }
+
     let tableDataCopy = this.state.tableData;
-    tableDataCopy[id] = { flavor: id, stock, suggested, btn: true };
+    tableDataCopy[flavor] = { flavor, stock, suggested, btn: true };
 
     this.setState({
       ...this.state,
@@ -70,7 +87,6 @@ export default class InventoryTable extends Component {
     if (state.addInProgress && state.scanned) {
       return (
         <EditModal
-          flavor={''}
           resetState={this.resetState}
           stock={''}
           suggested={''}
