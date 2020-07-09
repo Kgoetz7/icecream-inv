@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, StatusBar } from 'react-native';
 import BarcodeScanner from '../BarcodeScanner';
 
-export const ScanScreen = ({ setPage, handleScan }) => {
+export const ScanScreen = ({ navigation, handleScan }) => {
   return (
     <>
       <SafeAreaView>
         <StatusBar />
       </SafeAreaView>
       <BarcodeScanner
-        closeFn={() => setPage('home')}
+        closeFn={() => navigation.navigate('Home')}
         onScan={(barcodeData) => {
           handleScan(barcodeData);
         }}

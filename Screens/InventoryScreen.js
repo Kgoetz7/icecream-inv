@@ -93,7 +93,6 @@ export const InventoryScreen = ({ setPage }) => {
     <>
       <SafeAreaView>
         <StatusBar />
-        <Button title='Home' onPress={() => setPage('home')} />
       </SafeAreaView>
       <InventoryTable
         data={inventoryData}

@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
 import { HomeScreen } from './Screens/HomeScreen';
 import { ScanScreen } from './Screens/ScanScreen';
 import { InventoryScreen } from './Screens/InventoryScreen';
+
+const Stack = createStackNavigator();
 
 export default function App() {
   const [page, setPage] = useState('home');
@@ -25,9 +30,24 @@ export default function App() {
         } stock. ${response.updatedItem.stock} left.`
       );
     } catch (err) {
+      alert('Item not found');
       console.log(err);
     }
   };
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name='Home'>
+          {(props) => <HomeScreen {...props} setScanType={setScanType} />}
+        </Stack.Screen>
+        <Stack.Screen name='Inventory' component={InventoryScreen} />
+        <Stack.Screen name='Scan'>
+          {(props) => <ScanScreen {...props} handleScan={handleScan} />}
+        </Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 
   if (page === 'inventory') {
     return <InventoryScreen setPage={setPage} />;

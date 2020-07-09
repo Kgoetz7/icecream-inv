@@ -8,7 +8,7 @@ import {
   StatusBar,
 } from 'react-native';
 
-export const HomeScreen = ({ setPage, setScanType }) => {
+export const HomeScreen = ({ setScanType, navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar />
@@ -21,8 +21,8 @@ export const HomeScreen = ({ setPage, setScanType }) => {
         <TouchableHighlight
           style={styles.homeBtn}
           onPress={() => {
-            setPage('scan');
             setScanType('increment');
+            navigation.navigate('Scan');
           }}
         >
           <Text style={styles.btnText}>Scan In</Text>
@@ -31,8 +31,8 @@ export const HomeScreen = ({ setPage, setScanType }) => {
         <TouchableHighlight
           style={styles.homeBtn}
           onPress={() => {
-            setPage('scan');
             setScanType('decrement');
+            navigation.navigate('Scan');
           }}
         >
           <Text style={styles.btnText}>Scan Out</Text>
@@ -40,7 +40,7 @@ export const HomeScreen = ({ setPage, setScanType }) => {
         <Text>{'           '}</Text>
         <TouchableHighlight
           style={styles.homeBtn}
-          onPress={() => setPage('inventory')}
+          onPress={() => navigation.navigate('Inventory')}
         >
           <Text style={styles.btnText}>View Inventory</Text>
         </TouchableHighlight>
