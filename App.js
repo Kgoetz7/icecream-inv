@@ -48,12 +48,4 @@ export default function App() {
       </Stack.Navigator>
     </NavigationContainer>
   );
-
-  if (page === 'inventory') {
-    return <InventoryScreen setPage={setPage} />;
-  } else if (page === 'scan') {
-    return <ScanScreen setPage={setPage} handleScan={handleScan} />;
-  } else {
-    return <HomeScreen setPage={setPage} setScanType={setScanType} />;
-  }
 }

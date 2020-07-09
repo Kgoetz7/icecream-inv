@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   SafeAreaView,
-  Button,
+  TextInput,
   StatusBar,
   ActivityIndicator,
   View,
@@ -11,6 +11,7 @@ import InventoryTable from '../InventoryTable';
 
 export const InventoryScreen = ({ setPage }) => {
   const [inventoryData, setInventoryData] = useState([]);
+  const [filteredInventory, setFilteredInventory] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,6 +83,14 @@ export const InventoryScreen = ({ setPage }) => {
     }
   };
 
+  const filterInventory = (text) => {
+    const items = inventoryData.filter((item) => {
+      return item.flavor.includes(text.toLowerCase());
+    });
+    console.log(items);
+    setFilteredInventory(items);
+  };
+
   if (!inventoryData.length) {
     return (
       <View style={[styles.container, styles.horizontal]}>
@@ -94,8 +103,9 @@ export const InventoryScreen = ({ setPage }) => {
       <SafeAreaView>
         <StatusBar />
       </SafeAreaView>
+
       <InventoryTable
-        data={inventoryData}
+        data={filteredInventory.length ? filteredInventory : inventoryData}
         updateData={updateData}
         addData={addData}
         deleteItem={deleteItem}

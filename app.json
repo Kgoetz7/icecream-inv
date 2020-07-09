@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Icecream Inventory",
-    "slug": "icecream-inventory",
+    "name": "ColdStone Inventory",
+    "slug": "coldstone-inventory",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

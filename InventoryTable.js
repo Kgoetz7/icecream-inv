@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Button,
   ScrollView,
+  TextInput,
 } from 'react-native';
 import { Table, TableWrapper, Row, Cell } from 'react-native-table-component';
 import EditModal from './EditModal';
@@ -19,6 +20,7 @@ export default class InventoryTable extends Component {
       selectedFlavor: null,
       addInProgress: false,
       scanned: false,
+      filterInventory: this.props.data,
     };
     this.resetState = this.resetState.bind(this);
   }
@@ -35,6 +37,13 @@ export default class InventoryTable extends Component {
   _setSelectedFlavor(data) {
     this.setState({ ...this.state, selectedFlavor: data });
   }
+
+  filterInventory = (text) => {
+    const items = this.props.data.filter((item) => {
+      return item.flavor.toLowerCase().includes(text.toLowerCase());
+    });
+    this.setState({ ...this.state, filterInventory: items });
+  };
 
   render() {
     const state = this.state;
@@ -74,6 +83,11 @@ export default class InventoryTable extends Component {
 
     return (
       <View style={styles.container}>
+        <TextInput
+          style={styles.searchStyle}
+          placeholder='Search Inventory'
+          onChangeText={(text) => this.filterInventory(text)}
+        />
         <ScrollView horizontal={false}>
           <Table borderStyle={{ borderColor: 'transparent' }}>
             <Row
@@ -82,7 +96,7 @@ export default class InventoryTable extends Component {
               textStyle={styles.text}
               flexArr={[2, 1, 1, 0.5]}
             />
-            {this.props.data.map((object, index) => (
+            {state.filterInventory.map((object, index) => (
               <TableWrapper style={styles.row} key={index}>
                 {Object.keys(object).map((key, index) => {
                   return (
@@ -136,4 +150,8 @@ const styles = StyleSheet.create({
   },
   btn: { width: 48, height: 20, backgroundColor: '#78B7BB', borderRadius: 2 },
   btnText: { textAlign: 'center', color: '#fff' },
+  searchStyle: {
+    height: 40,
+    backgroundColor: '#eee',
+  },
 });
