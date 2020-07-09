@@ -80,6 +80,7 @@ export default class InventoryTable extends Component {
               data={state.tableHead}
               style={styles.head}
               textStyle={styles.text}
+              flexArr={[2, 1, 1, 0.5]}
             />
             {this.props.data.map((object, index) => (
               <TableWrapper style={styles.row} key={index}>
@@ -87,13 +88,14 @@ export default class InventoryTable extends Component {
                   return (
                     <Fragment key={index}>
                       <Cell
+                        width={key === 'flavor' ? '45%' : '20%'}
                         key={index}
                         data={
                           key === 'btn'
                             ? element(object['flavor'], index)
                             : object[key]
                         }
-                        textStyle={styles.text}
+                        textStyle={[styles.text]}
                       />
                       {state.selectedFlavor === object['flavor'] ? (
                         <EditModal
@@ -124,7 +126,8 @@ export default class InventoryTable extends Component {
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
   head: { height: 40, backgroundColor: '#808B97' },
-  text: { margin: 6 },
+  text: { margin: 6, textTransform: 'capitalize' },
+  flavorCell: { width: '100%' },
   row: {
     flexDirection: 'row',
     backgroundColor: '#FFF1C1',
