@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
   Modal,
@@ -9,7 +9,14 @@ import {
   TextInput,
 } from 'react-native';
 
-const EditModal = ({ id, stock, suggested, resetState, updateData }) => {
+const EditModal = ({
+  id,
+  stock,
+  suggested,
+  resetState,
+  deleteItem,
+  updateData,
+}) => {
   const [editSuggestedValue, setEditSuggested] = useState(suggested);
   const [editStock, setEditStock] = useState(stock);
 
@@ -25,12 +32,26 @@ const EditModal = ({ id, stock, suggested, resetState, updateData }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text>Flavor</Text>
-            <TextInput
-              value={id}
-              style={styles.tableInput}
-              placeholder='Flavor'
-            />
+            {deleteItem ? (
+              <TouchableHighlight
+                style={{
+                  ...styles.openButton,
+                  backgroundColor: 'rgb(220, 0, 78)',
+                  marginBottom: 20,
+                }}
+                onPress={() => {
+                  resetState();
+                  deleteItem(id);
+                }}
+              >
+                <Text style={styles.textStyle}>Delete</Text>
+              </TouchableHighlight>
+            ) : null}
+            <Text
+              style={{ fontWeight: 'bold', fontSize: 20, marginBottom: 10 }}
+            >
+              {id}
+            </Text>
             <View style={{ flexDirection: 'row' }}>
               <View style={{ marginRight: 20 }}>
                 <Text>Stock</Text>
@@ -53,12 +74,23 @@ const EditModal = ({ id, stock, suggested, resetState, updateData }) => {
             </View>
             <View style={{ flexDirection: 'row' }}>
               <TouchableHighlight
-                style={{ ...styles.openButton, backgroundColor: 'red' }}
+                style={{
+                  ...styles.openButton,
+                  backgroundColor: '#e0e0e0',
+                  marginRight: 20,
+                }}
                 onPress={() => {
                   resetState();
                 }}
               >
-                <Text style={styles.textStyle}>Cancel</Text>
+                <Text
+                  style={{
+                    ...styles.textStyle,
+                    color: 'black',
+                  }}
+                >
+                  Cancel
+                </Text>
               </TouchableHighlight>
               <TouchableHighlight
                 style={{ ...styles.openButton, backgroundColor: '#2196F3' }}
@@ -101,7 +133,7 @@ const styles = StyleSheet.create({
   },
   openButton: {
     backgroundColor: '#F194FF',
-    borderRadius: 20,
+    borderRadius: 5,
     padding: 10,
     elevation: 2,
   },

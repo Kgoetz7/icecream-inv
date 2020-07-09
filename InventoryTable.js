@@ -105,6 +105,7 @@ export default class InventoryTable extends Component {
                           suggested={object['suggested']}
                           updateData={this.props.updateData}
                           id={object['flavor']}
+                          deleteItem={this.props.deleteItem}
                         />
                       ) : null}
                     </Fragment>

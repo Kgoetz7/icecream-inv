@@ -65,6 +65,23 @@ export const InventoryScreen = ({ setPage }) => {
     }
   };
 
+  const deleteItem = async (flavor) => {
+    try {
+      const data = await fetch('https://icecreamapp-api.herokuapp.com/items', {
+        method: 'delete',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          flavor,
+        }),
+      });
+
+      const items = await data.json();
+      setInventoryData(items);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   if (!inventoryData.length) {
     return (
       <View style={[styles.container, styles.horizontal]}>
@@ -82,6 +99,7 @@ export const InventoryScreen = ({ setPage }) => {
         data={inventoryData}
         updateData={updateData}
         addData={addData}
+        deleteItem={deleteItem}
       />
     </>
   );
